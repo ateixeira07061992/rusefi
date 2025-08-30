@@ -110,16 +110,16 @@ float processW202(const CANRxFrame& frame) {
 #define SLIP_RATIO(frontAxle, rearAxle) (((frontAxle) == 0 || (rearAxle) == 0) ? 1 : 1.0 * (frontAxle) / (rearAxle))
 
 float processHyundai(const CANRxFrame& frame, efitick_t nowNt) {
-  int frontL = getBitRangeLsb(frame.data8, 16, 12);
-  int frontR = getBitRangeLsb(frame.data8, 28, 12);
-  int rearL = getBitRangeLsb(frame.data8, 40, 12);
-  int rearR = getBitRangeLsb(frame.data8, 52, 12);
+  int frontL = getTwoBytesMsb(frame, 0);
+  int frontR = getTwoBytesMsb(frame, 2);
+  int rearL = getTwoBytesMsb(frame, 4);
+  int rearR = getTwoBytesMsb(frame, 6); 
 
   int frontAxle = (frontL + frontR);
   int rearAxle = (rearL + rearR);
 
   if (engineConfiguration->verboseCan) {
-    efiPrintf("processHyundai: frontL %d rearL %d", frontL, rearL);
+    efiPrintf("processHyundai: frontL %d frontR %d rearL %d  rearR %d", frontL, frontR, rearL, rearR);
   }
 
   wheelSlipRatio.setValidValue(SLIP_RATIO(frontAxle, rearAxle), nowNt);
