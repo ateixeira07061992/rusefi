@@ -119,8 +119,8 @@ float processHyundai(const CANRxFrame& frame, efitick_t nowNt) {
   int rearAxle = (rearL + rearR);
 
   if (engineConfiguration->verboseCan) {
-    efiPrintf("processHyundai: frontL %d frontR %d rearL %d  rearR %d", frontL, frontR, rearL, rearR);
-  }
+    efiPrintf("processHyundai: frontL %d frontR %d rearL %d  rearR %d", frontL, frontR, rearL, rearR);
+  }
 
   wheelSlipRatio.setValidValue(SLIP_RATIO(frontAxle, rearAxle), nowNt);
 
